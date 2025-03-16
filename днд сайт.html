@@ -1,0 +1,2034 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D Творець Персонажів</title>
+    <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2B1810;
+            --secondary-color: #8B4513;
+            --text-color: #DEB887;
+            --accent-color: #A0522D;
+            --bg-color: #2B1810;
+            --gold: #d4af37;
+            --parchment: #f4e4bc;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            color: var(--text-color);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Оновлена навігація */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            padding: 15px 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--secondary-color);
+            box-shadow: 0 2px 20px rgba(212, 175, 55, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-list {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            flex-wrap: nowrap;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nav-item {
+            margin: 0 15px;
+            white-space: nowrap;
+        }
+
+        .nav-link {
+            color: var(--gold);
+            text-decoration: none;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.1em;
+            display: flex;
+            align-items: center;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(212, 175, 55, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .nav-link:hover::before {
+            left: 100%;
+        }
+
+        .nav-link:hover {
+            background: rgba(212, 175, 55, 0.1);
+            transform: translateY(-2px);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+            box-shadow: 0 5px 15px rgba(139, 0, 0, 0.2);
+        }
+
+        .nav-link i {
+            margin-right: 10px;
+            font-size: 1.2em;
+        }
+
+        /* Оновлені секції */
+        .section {
+            min-height: 100vh;
+            padding: 120px 20px 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .container {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            padding: 40px;
+            text-align: center;
+            max-width: 1400px;
+            width: 95%;
+            margin: 20px auto;
+            min-height: 800px;
+            position: relative;
+            border: 4px double var(--secondary-color);
+            box-shadow: 
+                0 0 0 1px var(--accent-color),
+                0 0 0 10px var(--primary-color),
+                0 0 0 11px var(--secondary-color),
+                0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Оновлені декоративні елементи */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            bottom: 10px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            pointer-events: none;
+        }
+
+        /* Декоративні кути */
+        .container::after {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            background: 
+                /* Верхній лівий кут */
+                radial-gradient(circle at 0 0, transparent 20px, var(--gold) 21px, transparent 22px) top left,
+                /* Верхній правий кут */
+                radial-gradient(circle at 100% 0, transparent 20px, var(--gold) 21px, transparent 22px) top right,
+                /* Нижній лівий кут */
+                radial-gradient(circle at 0 100%, transparent 20px, var(--gold) 21px, transparent 22px) bottom left,
+                /* Нижній правий кут */
+                radial-gradient(circle at 100% 100%, transparent 20px, var(--gold) 21px, transparent 22px) bottom right;
+            background-size: 40px 40px;
+            background-repeat: no-repeat;
+            pointer-events: none;
+        }
+
+        /* Додаємо декоративні елементи по кутах */
+        .container-corner {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 40"><path d="M0 40V0h40L0 40z" fill="%23d4af37" fill-opacity="0.2"/></svg>');
+        }
+
+        .corner-top-left {
+            top: 0;
+            left: 0;
+        }
+
+        .corner-top-right {
+            top: 0;
+            right: 0;
+            transform: rotate(90deg);
+        }
+
+        .corner-bottom-left {
+            bottom: 0;
+            left: 0;
+            transform: rotate(270deg);
+        }
+
+        .corner-bottom-right {
+            bottom: 0;
+            right: 0;
+            transform: rotate(180deg);
+        }
+
+        h1 {
+            font-family: 'MedievalSharp', cursive;
+            color: #DEB887;
+            font-size: 3.5em;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5),
+                         0 0 20px rgba(139, 69, 19, 0.5);
+            position: relative;
+        }
+
+        h1::before,
+        h1::after {
+            content: '❖';
+            color: var(--gold);
+            font-size: 0.5em;
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        h1::before {
+            left: -40px;
+        }
+
+        h1::after {
+            right: -40px;
+        }
+
+        /* Оновлені feature boxes */
+        .feature-box {
+            background: rgba(139, 0, 0, 0.05);
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            border: 2px solid var(--gold);
+            position: relative;
+            overflow: hidden;
+            max-width: 800px;
+            transform-origin: center;
+        }
+
+        .feature-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, 
+                transparent 0%,
+                rgba(212, 175, 55, 0.1) 50%,
+                transparent 100%);
+            transform: translateX(-100%);
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 30px rgba(139, 0, 0, 0.2),
+                       0 0 20px rgba(212, 175, 55, 0.2);
+            background: rgba(139, 0, 0, 0.08);
+        }
+
+        .feature-box:hover::before {
+            transform: translateX(100%);
+        }
+
+        .feature-box:hover .feature-icon {
+            transform: rotate(360deg) scale(1.2);
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            color: var(--gold);
+            margin-right: 20px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            flex-shrink: 0;
+        }
+
+        .feature-box div {
+            flex-grow: 1;
+        }
+
+        /* Оновлений фон для різних секцій */
+        #home {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            position: relative;
+        }
+
+        #home::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            opacity: 0.7;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #features {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            position: relative;
+        }
+
+        #features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            opacity: 0.7;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        #character, #about {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            position: relative;
+        }
+
+        #character::before, #about::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            opacity: 0.7;
+            z-index: 0;
+            pointer-events: none;
+            mix-blend-mode: overlay;
+        }
+
+        /* Оновлений скрол-індикатор */
+        .scroll-indicator {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--gold);
+            font-size: 2em;
+            cursor: pointer;
+            z-index: 1000;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            animation: float 2s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            50% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+        }
+
+        .error-message {
+            color: var(--accent-color);
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(196, 30, 58, 0.1);
+            border: 1px solid var(--accent-color);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .nav-list {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .nav-item {
+                margin: 5px 10px;
+            }
+
+            .nav-link {
+                font-size: 1em;
+                padding: 6px 10px;
+            }
+
+            .container {
+                padding: 20px;
+                width: 90%;
+            }
+
+            .section {
+                padding: 100px 10px 80px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav {
+                padding: 10px 0;
+            }
+
+            .nav-link {
+                font-size: 0.9em;
+                padding: 5px 8px;
+            }
+
+            .nav-link i {
+                margin-right: 5px;
+                font-size: 1em;
+            }
+
+            .container {
+                padding: 15px;
+                width: 95%;
+            }
+        }
+
+        /* Оновлені стилі для форми створення персонажа */
+        .character-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            text-align: center;
+            background: rgba(244, 228, 188, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(139, 0, 0, 0.2);
+            border: 2px solid var(--gold);
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Оновлюємо стилі для форм-секцій */
+        .form-section {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            border: 2px solid var(--gold);
+            box-shadow: 
+                0 0 0 1px rgba(212, 175, 55, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Декоративні елементи для форм-секцій */
+        .form-section::before {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            right: 5px;
+            bottom: 5px;
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            pointer-events: none;
+        }
+
+        /* Декоративні кути для форм-секцій */
+        .form-section::after {
+            content: '❖';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--parchment);
+            color: var(--gold);
+            padding: 0 10px;
+            font-size: 1.2em;
+        }
+
+        .basic-info {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .abilities-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .proficiencies-section {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .personality-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .form-group label {
+            color: #DEB887;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.2em;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .form-group select {
+            padding: 12px;
+            border: 2px solid var(--gold);
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.9);
+            font-family: 'MedievalSharp', cursive;
+            color: var(--primary-color);
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 2px 6px rgba(139, 0, 0, 0.1);
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: 
+                linear-gradient(45deg, transparent 50%, var(--gold) 50%),
+                linear-gradient(135deg, var(--gold) 50%, transparent 50%);
+            background-position: 
+                calc(100% - 20px) calc(1em + 2px),
+                calc(100% - 15px) calc(1em + 2px);
+            background-size: 
+                5px 5px,
+                5px 5px;
+            background-repeat: no-repeat;
+        }
+
+        .form-group select:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(139, 0, 0, 0.15);
+            background-color: rgba(212, 175, 55, 0.1);
+        }
+
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.3);
+        }
+
+        .form-group select option {
+            background: var(--parchment);
+            color: var(--primary-color);
+            padding: 10px;
+        }
+
+        #subclassGroup {
+            opacity: 1;
+            transform: none;
+            transition: none;
+            pointer-events: all;
+        }
+
+        #subclassGroup.visible {
+            opacity: 1;
+            transform: none;
+        }
+
+        @media (max-width: 1200px) {
+            .basic-info {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .personality-section {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .basic-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-section {
+                padding: 15px;
+            }
+        }
+
+        .proficiency-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            width: 100%;
+            padding: 20px;
+            justify-items: center;
+            align-items: center;
+        }
+
+        .proficiency-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 15px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 6px;
+            border: 1px solid var(--gold);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 200px;
+            min-height: 40px;
+        }
+
+        .proficiency-item label {
+            margin: 0 0 0 8px;
+            font-size: 0.95em;
+            font-family: 'MedievalSharp', cursive;
+            color: var(--primary-color);
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .proficiency-item input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+            margin: 0;
+        }
+
+        .proficiency-item:hover {
+            transform: translateY(-2px);
+            background: rgba(212, 175, 55, 0.1);
+            box-shadow: 0 2px 8px rgba(139, 0, 0, 0.1);
+        }
+
+        @media (max-width: 1200px) {
+            .proficiency-list {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            
+            .proficiency-item {
+                max-width: 220px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .proficiency-list {
+                grid-template-columns: repeat(1, 1fr);
+                gap: 8px;
+                padding: 15px;
+            }
+            
+            .proficiency-item {
+                max-width: 250px;
+                padding: 6px 12px;
+            }
+            
+            .proficiency-item label {
+                font-size: 0.9em;
+            }
+        }
+
+        .abilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 30px;
+            background: var(--parchment);
+            border-radius: 15px;
+            position: relative;
+            border: 2px solid var(--gold);
+            box-shadow: 0 0 20px rgba(139, 0, 0, 0.1);
+        }
+
+        .abilities-grid::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            right: -5px;
+            bottom: -5px;
+            background: linear-gradient(45deg, 
+                rgba(212, 175, 55, 0.2) 0%,
+                transparent 40%,
+                transparent 60%,
+                rgba(212, 175, 55, 0.2) 100%
+            );
+            border-radius: 18px;
+            z-index: -1;
+        }
+
+        .ability-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .ability-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(139, 0, 0, 0.15);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .ability-item label {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.2em;
+            color: var(--primary-color);
+            margin-right: 15px;
+            font-weight: bold;
+            min-width: 100px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .ability-item input[type="range"] {
+            flex: 1;
+            height: 8px;
+            background: linear-gradient(to right, var(--primary-color), var(--gold));
+            border-radius: 4px;
+            outline: none;
+            margin: 0 15px;
+            cursor: pointer;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            border: none;
+        }
+
+        .ability-item input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 24px;
+            height: 24px;
+            background: var(--gold);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            transition: all 0.2s ease;
+            margin-top: -8px;
+        }
+
+        .ability-item input[type="range"]::-moz-range-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--gold);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            transition: all 0.2s ease;
+        }
+
+        .ability-item input[type="range"]::-ms-thumb {
+            width: 24px;
+            height: 24px;
+            background: var(--gold);
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+            transition: all 0.2s ease;
+            margin-top: 0;
+        }
+
+        .ability-item input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, var(--primary-color), var(--gold));
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .ability-item input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(to right, var(--primary-color), var(--gold));
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .ability-item input[type="range"]::-ms-track {
+            width: 100%;
+            height: 8px;
+            background: transparent;
+            border-color: transparent;
+            color: transparent;
+            cursor: pointer;
+        }
+
+        .ability-item input[type="range"]::-ms-fill-lower {
+            background: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .ability-item input[type="range"]::-ms-fill-upper {
+            background: var(--gold);
+            border-radius: 4px;
+        }
+
+        .ability-item input[type="range"]:hover::-webkit-slider-thumb {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .ability-item input[type="range"]:hover::-moz-range-thumb {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .ability-item input[type="range"]:hover::-ms-thumb {
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .ability-item input[type="range"]:active::-webkit-slider-thumb {
+            transform: scale(1.1);
+            background: var(--primary-color);
+            border-color: var(--gold);
+        }
+
+        .ability-item input[type="range"]:active::-moz-range-thumb {
+            transform: scale(1.1);
+            background: var(--primary-color);
+            border-color: var(--gold);
+        }
+
+        .ability-item input[type="range"]:active::-ms-thumb {
+            transform: scale(1.1);
+            background: var(--primary-color);
+            border-color: var(--gold);
+        }
+
+        .ability-value {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.3em;
+            color: var(--primary-color);
+            min-width: 35px;
+            text-align: center;
+            margin: 0 10px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .ability-modifier {
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.1em;
+            color: var(--primary-color);
+            background: var(--gold);
+            padding: 5px 10px;
+            border-radius: 8px;
+            min-width: 45px;
+            text-align: center;
+            margin-left: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .ability-item:hover .ability-modifier {
+            transform: scale(1.1);
+            box-shadow: 0 4px 8px rgba(139, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .abilities-grid {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .ability-item {
+                padding: 12px;
+            }
+
+            .ability-item label {
+                min-width: 80px;
+                font-size: 1.1em;
+            }
+        }
+
+        .create-button {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 12px 24px;
+            font-family: 'MedievalSharp', cursive;
+            font-size: 1.2em;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            margin-top: 20px;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .create-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(
+                circle,
+                rgba(212, 175, 55, 0.2) 0%,
+                transparent 70%
+            );
+            transform: scale(0);
+            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .create-button:hover::before {
+            transform: scale(1);
+        }
+
+        .create-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(139, 0, 0, 0.3),
+                       0 0 20px rgba(212, 175, 55, 0.2);
+            text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);
+        }
+
+        .create-button:active {
+            transform: translateY(1px);
+        }
+
+        .create-button i {
+            margin-right: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        /* Стилі для розширених атрибутів */
+        .appearance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .section-title {
+            font-family: 'MedievalSharp', cursive;
+            color: #DEB887;
+            font-size: 2em;
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+            text-shadow: 
+                1px 1px 0 #000,
+                2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .section-title::before,
+        .section-title::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(
+                to var(--direction, right),
+                transparent,
+                #8B4513,
+                transparent
+            );
+        }
+
+        .section-title::before {
+            right: calc(50% + 100px);
+            --direction: right;
+        }
+
+        .section-title::after {
+            left: calc(50% + 100px);
+            --direction: left;
+        }
+
+        /* Стилі для механічних елементів */
+        .mechanics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .hp-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hp-container input {
+                width: 70px;
+        }
+
+        .hp-container span {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        /* Стилі для спорядження */
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .inventory-section {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .inventory-section textarea {
+            width: 100%;
+            min-height: 100px;
+        }
+
+        /* Стилі для довідкової інформації */
+        .reference-section {
+            padding: 20px;
+        }
+
+        .reference-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .ref-tab {
+            background: #2B1810;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            color: var(--gold);
+            border: 2px solid var(--gold);
+            padding: 10px 20px;
+            font-family: 'MedievalSharp', cursive;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .ref-tab:hover, .ref-tab.active {
+            background: #3C2415;
+            background-image: url('https://www.transparenttextures.com/patterns/dark-wood.png');
+            color: var(--gold);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .reference-content {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px solid var(--gold);
+            border-radius: 10px;
+            padding: 20px;
+            min-height: 200px;
+        }
+
+        @media (max-width: 1200px) {
+            .appearance-grid,
+            .mechanics-grid,
+            .equipment-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .appearance-grid,
+            .mechanics-grid,
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .reference-tabs {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="nav">
+        <ul class="nav-list">
+            <li class="nav-item">
+                <a href="#home" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    Головна
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#features" class="nav-link">
+                    <i class="fas fa-magic"></i>
+                    Можливості
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#character" class="nav-link">
+                    <i class="fas fa-dice-d20"></i>
+                    Створити персонажа
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#about" class="nav-link">
+                    <i class="fas fa-book"></i>
+                    Про нас
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <section id="home" class="section">
+        <div class="container">
+            <div class="container-corner corner-top-left"></div>
+            <div class="container-corner corner-top-right"></div>
+            <div class="container-corner corner-bottom-left"></div>
+            <div class="container-corner corner-bottom-right"></div>
+            <h1>D&D Творець Персонажів</h1>
+            <div id="content">
+                <p>Ласкаво просимо до творця персонажів D&D!</p>
+                <div class="feature-box">
+                    <i class="feature-icon fas fa-dragon"></i>
+                    <div>
+                        <h3>Магічні можливості</h3>
+                        <p>Відкрийте для себе неймовірні можливості нашого сайту</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <i class="feature-icon fas fa-scroll"></i>
+                    <div>
+                        <h3>Древні знання</h3>
+                        <p>Дізнайтеся секрети, що приховані в глибинах часу</p>
+                    </div>
+                </div>
+                <div class="feature-box">
+                    <i class="feature-icon fas fa-shield-alt"></i>
+                    <div>
+                        <h3>Надійний захист</h3>
+                        <p>Ваші дані під надійною охороною</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="section">
+        <div class="container">
+            <div class="container-corner corner-top-left"></div>
+            <div class="container-corner corner-top-right"></div>
+            <div class="container-corner corner-bottom-left"></div>
+            <div class="container-corner corner-bottom-right"></div>
+            <h1>Можливості</h1>
+            <div class="feature-box">
+                <i class="feature-icon fas fa-wand-sparkles"></i>
+                <div>
+                    <h3>Чарівні інструменти</h3>
+                    <p>Використовуйте потужні інструменти для досягнення ваших цілей</p>
+                </div>
+            </div>
+            <div class="feature-box">
+                <i class="feature-icon fas fa-hat-wizard"></i>
+                <div>
+                    <h3>Мудрість віків</h3>
+                    <p>Отримайте доступ до древніх знань та секретів</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="character" class="section">
+        <div class="container">
+            <div class="container-corner corner-top-left"></div>
+            <div class="container-corner corner-top-right"></div>
+            <div class="container-corner corner-bottom-left"></div>
+            <div class="container-corner corner-bottom-right"></div>
+            <h1>Створення персонажа D&D</h1>
+            <div id="content">
+                <form class="character-form" id="characterForm">
+                    <div class="form-section basic-info">
+                        <div class="form-group">
+                            <label for="name">Ім'я персонажа</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="race">Раса</label>
+                            <select id="race" required>
+                                <option value="">Оберіть расу</option>
+                                <option value="human">Людина</option>
+                                <option value="elf">Ельф</option>
+                                <option value="dwarf">Дворф</option>
+                                <option value="halfling">Халфлінг</option>
+                                <option value="dragonborn">Драконороджений</option>
+                                <option value="tiefling">Тіфлінг</option>
+                                <option value="gnome">Гном</option>
+                                <option value="half-elf">Напівельф</option>
+                                <option value="half-orc">Напіворк</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="class">Клас</label>
+                            <select id="class" required onchange="updateSubclass()">
+                                <option value="">Оберіть клас</option>
+                                <option value="warrior">Воїн</option>
+                                <option value="wizard">Чарівник</option>
+                                <option value="rogue">Розбійник</option>
+                                <option value="cleric">Жрець</option>
+                                <option value="bard">Бард</option>
+                                <option value="paladin">Паладин</option>
+                                <option value="ranger">Слідопит</option>
+                                <option value="sorcerer">Чародій</option>
+                                <option value="warlock">Варлок</option>
+                                <option value="monk">Монах</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="subclassGroup">
+                            <label for="subclass">Під-клас</label>
+                            <select id="subclass" required>
+                                <option value="">Спочатку оберіть основний клас</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="background">Передісторія</label>
+                            <select id="background" required>
+                                <option value="">Оберіть передісторію</option>
+                                <option value="acolyte">Служитель культу</option>
+                                <option value="criminal">Злочинець</option>
+                                <option value="folk-hero">Народний герой</option>
+                                <option value="noble">Шляхетний</option>
+                                <option value="sage">Мудрець</option>
+                                <option value="soldier">Солдат</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="alignment">Світогляд</label>
+                            <select id="alignment" required>
+                                <option value="">Оберіть світогляд</option>
+                                <option value="lawful-good">Законний добрий</option>
+                                <option value="neutral-good">Нейтральний добрий</option>
+                                <option value="chaotic-good">Хаотичний добрий</option>
+                                <option value="lawful-neutral">Законний нейтральний</option>
+                                <option value="true-neutral">Істинно нейтральний</option>
+                                <option value="chaotic-neutral">Хаотичний нейтральний</option>
+                                <option value="lawful-evil">Законний злий</option>
+                                <option value="neutral-evil">Нейтральний злий</option>
+                                <option value="chaotic-evil">Хаотичний злий</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section abilities-section">
+                        <label>Характеристики</label>
+                        <div class="abilities-grid">
+                            <div class="ability-item">
+                                <label for="strength">Сила</label>
+                                <span id="strengthValue">10</span>
+                                <input type="range" id="strength" min="8" max="18" value="10">
+                                <span id="strengthMod">+0</span>
+                            </div>
+                            <div class="ability-item">
+                                <label for="dexterity">Спритність</label>
+                                <span id="dexterityValue">10</span>
+                                <input type="range" id="dexterity" min="8" max="18" value="10">
+                                <span id="dexterityMod">+0</span>
+                            </div>
+                            <div class="ability-item">
+                                <label for="constitution">Статура</label>
+                                <span id="constitutionValue">10</span>
+                                <input type="range" id="constitution" min="8" max="18" value="10">
+                                <span id="constitutionMod">+0</span>
+                            </div>
+                            <div class="ability-item">
+                                <label for="intelligence">Інтелект</label>
+                                <span id="intelligenceValue">10</span>
+                                <input type="range" id="intelligence" min="8" max="18" value="10">
+                                <span id="intelligenceMod">+0</span>
+                            </div>
+                            <div class="ability-item">
+                                <label for="wisdom">Мудрість</label>
+                                <span id="wisdomValue">10</span>
+                                <input type="range" id="wisdom" min="8" max="18" value="10">
+                                <span id="wisdomMod">+0</span>
+                            </div>
+                            <div class="ability-item">
+                                <label for="charisma">Харизма</label>
+                                <span id="charismaValue">10</span>
+                                <input type="range" id="charisma" min="8" max="18" value="10">
+                                <span id="charismaMod">+0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section proficiencies-section">
+                        <label>Володіння навичками</label>
+                        <div class="proficiency-list">
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="acrobatics">
+                                <label for="acrobatics">Акробатика</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="arcana">
+                                <label for="arcana">Магія</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="athletics">
+                                <label for="athletics">Атлетика</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="stealth">
+                                <label for="stealth">Непомітність</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="investigation">
+                                <label for="investigation">Розслідування</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="nature">
+                                <label for="nature">Природа</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="perception">
+                                <label for="perception">Сприйняття</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="survival">
+                                <label for="survival">Виживання</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="medicine">
+                                <label for="medicine">Медицина</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="deception">
+                                <label for="deception">Обман</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="intimidation">
+                                <label for="intimidation">Залякування</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="performance">
+                                <label for="performance">Виступ</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="persuasion">
+                                <label for="persuasion">Переконання</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="history">
+                                <label for="history">Історія</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="religion">
+                                <label for="religion">Релігія</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="sleight">
+                                <label for="sleight">Спритність рук</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="insight">
+                                <label for="insight">Проникливість</label>
+                            </div>
+                            <div class="proficiency-item">
+                                <input type="checkbox" id="animal">
+                                <label for="animal">Догляд за тваринами</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section personality-section">
+                        <div class="form-group">
+                            <label for="personality">Риси характеру</label>
+                            <textarea id="personality" rows="3" placeholder="Опишіть особистість вашого персонажа..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="ideals">Ідеали</label>
+                            <textarea id="ideals" rows="2" placeholder="Що важливо для вашого персонажа..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="bonds">Прив'язаності</label>
+                            <textarea id="bonds" rows="2" placeholder="До чого прив'язаний ваш персонаж..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="flaws">Вади</label>
+                            <textarea id="flaws" rows="2" placeholder="Недоліки вашого персонажа..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Нова секція для розширених атрибутів -->
+                    <div class="form-section appearance-section">
+                        <h3 class="section-title">Зовнішність та особливості</h3>
+                        <div class="appearance-grid">
+                            <div class="form-group">
+                                <label for="height">Зріст</label>
+                                <input type="text" id="height" placeholder="Наприклад: 180 см">
+                            </div>
+                            <div class="form-group">
+                                <label for="weight">Вага</label>
+                                <input type="text" id="weight" placeholder="Наприклад: 75 кг">
+                            </div>
+                            <div class="form-group">
+                                <label for="eyes">Колір очей</label>
+                                <input type="text" id="eyes" placeholder="Наприклад: Карі">
+                            </div>
+                            <div class="form-group">
+                                <label for="hair">Колір волосся</label>
+                                <input type="text" id="hair" placeholder="Наприклад: Чорне">
+                            </div>
+                            <div class="form-group">
+                                <label for="skin">Колір шкіри</label>
+                                <input type="text" id="skin" placeholder="Наприклад: Світла">
+                            </div>
+                            <div class="form-group">
+                                <label for="features">Особливі прикмети</label>
+                                <textarea id="features" placeholder="Опишіть особливі прикмети персонажа..."></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Нова секція для механічних елементів -->
+                    <div class="form-section mechanics-section">
+                        <h3 class="section-title">Бойові характеристики</h3>
+                        <div class="mechanics-grid">
+                            <div class="form-group">
+                                <label for="hp">Хіти</label>
+                                <div class="hp-container">
+                                    <input type="number" id="maxHp" placeholder="Максимум">
+                                    <span>/</span>
+                                    <input type="number" id="currentHp" placeholder="Поточні">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="ac">Клас броні</label>
+                                <input type="number" id="ac" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label for="initiative">Ініціатива</label>
+                                <input type="number" id="initiative">
+                            </div>
+                            <div class="form-group">
+                                <label for="speed">Швидкість</label>
+                                <input type="number" id="speed" placeholder="футів">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Нова секція для спорядження -->
+                    <div class="form-section equipment-section">
+                        <h3 class="section-title">Спорядження</h3>
+                        <div class="equipment-grid">
+                            <div class="form-group">
+                                <label for="armor">Броня</label>
+                                <select id="armor">
+                                    <option value="">Оберіть броню</option>
+                                    <option value="leather">Шкіряна броня</option>
+                                    <option value="chain">Кольчуга</option>
+                                    <option value="plate">Латна броня</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="weapon1">Основна зброя</label>
+                                <select id="weapon1">
+                                    <option value="">Оберіть зброю</option>
+                                    <option value="sword">Меч</option>
+                                    <option value="bow">Лук</option>
+                                    <option value="staff">Посох</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="weapon2">Додаткова зброя</label>
+                                <select id="weapon2">
+                                    <option value="">Оберіть зброю</option>
+                                    <option value="dagger">Кинджал</option>
+                                    <option value="shield">Щит</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="inventory-section">
+                            <label for="inventory">Інвентар</label>
+                            <textarea id="inventory" placeholder="Опишіть інші предмети, що має ваш персонаж..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Нова секція для довідкової інформації -->
+                    <div class="form-section reference-section">
+                        <h3 class="section-title">Довідкова інформація</h3>
+                        <div class="reference-tabs">
+                            <button class="ref-tab" onclick="showRefTab('racial')">Расові особливості</button>
+                            <button class="ref-tab" onclick="showRefTab('class')">Класові здібності</button>
+                            <button class="ref-tab" onclick="showRefTab('spells')">Заклинання</button>
+                        </div>
+                        <div id="referenceContent" class="reference-content">
+                            <!-- Контент буде додаватися динамічно -->
+                        </div>
+                    </div>
+
+                    <button type="submit" class="create-button">
+                        <i class="fas fa-scroll"></i> Створити персонажа
+                    </button>
+                </form>
+                <div id="characterSheet" class="character-sheet">
+                    <!-- Тут буде відображатися створений персонаж -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <div class="container-corner corner-top-left"></div>
+            <div class="container-corner corner-top-right"></div>
+            <div class="container-corner corner-bottom-left"></div>
+            <div class="container-corner corner-bottom-right"></div>
+            <h1>Про нас</h1>
+            <div id="content">
+                <p>Ми - команда ентузіастів, що створює магію в цифровому світі</p>
+                <div class="feature-box">
+                    <i class="feature-icon fas fa-users"></i>
+                    <div>
+                        <h3>Наша команда</h3>
+                        <p>Професіонали своєї справи, віддані магії технологій</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="scroll-indicator">
+        <i class="fas fa-chevron-down"></i>
+    </div>
+
+    <div id="error" class="error-message">
+        <i class="fas fa-exclamation-triangle"></i>
+        Доступ заборонено. Цей сайт доступний тільки через спеціальний ярлик.
+    </div>
+
+    <script>
+        // Перевіряємо, чи відкрито сайт через файл
+        if (window.location.protocol !== 'file:') {
+            document.querySelectorAll('section').forEach(section => {
+                section.style.display = 'none';
+            });
+            document.getElementById('error').style.display = 'block';
+        }
+
+        // Додаємо анімацію для feature-boxes
+        document.querySelectorAll('.feature-box').forEach(box => {
+            box.addEventListener('mouseover', () => {
+                box.querySelector('.feature-icon').style.transform = 'scale(1.2)';
+            });
+            box.addEventListener('mouseout', () => {
+                box.querySelector('.feature-icon').style.transform = 'scale(1)';
+            });
+        });
+
+        // Плавна прокрутка для навігації
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Анімація індикатора прокрутки
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        scrollIndicator.addEventListener('click', () => {
+            const currentSection = document.querySelector(':target') || document.querySelector('section');
+            const nextSection = currentSection.nextElementSibling;
+            if (nextSection && nextSection.tagName === 'SECTION') {
+                nextSection.scrollIntoView({ behavior: 'smooth' });
+            } else {
+                document.querySelector('section').scrollIntoView({ behavior: 'smooth' });
+            }
+        });
+
+        // Приховуємо індикатор прокрутки на останній секції
+        window.addEventListener('scroll', () => {
+            const bottomSection = document.querySelector('section:last-of-type');
+            const rect = bottomSection.getBoundingClientRect();
+            if (rect.top < window.innerHeight && rect.bottom >= window.innerHeight) {
+                scrollIndicator.style.opacity = '0';
+            } else {
+                scrollIndicator.style.opacity = '1';
+            }
+        });
+
+        // Оновлення значень характеристик
+        document.querySelectorAll('input[type="range"]').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const value = parseInt(e.target.value);
+                document.getElementById(e.target.id + 'Value').textContent = value;
+                const modifier = Math.floor((value - 10) / 2);
+                document.getElementById(e.target.id + 'Mod').textContent = 
+                    modifier >= 0 ? `+${modifier}` : modifier;
+            });
+        });
+
+        const raceNames = {
+            'dwarf': 'Дворф',
+            'elf': 'Ельф',
+            'halfling': 'Халфлінг',
+            'human': 'Людина',
+            'dragonborn': 'Драконороджений',
+            'gnome': 'Гном',
+            'half-elf': 'Напівельф',
+            'half-orc': 'Напіворк',
+            'tiefling': 'Тіфлінг'
+        };
+
+        const classNames = {
+            'barbarian': 'Варвар',
+            'bard': 'Бард',
+            'cleric': 'Жрець',
+            'druid': 'Друїд',
+            'fighter': 'Воїн',
+            'monk': 'Монах',
+            'paladin': 'Паладин',
+            'ranger': 'Слідопит',
+            'rogue': 'Пройдисвіт',
+            'sorcerer': 'Чародій',
+            'warlock': 'Чаклун',
+            'wizard': 'Чарівник'
+        };
+
+        const backgroundNames = {
+            'acolyte': 'Служитель культу',
+            'criminal': 'Злочинець',
+            'folk-hero': 'Народний герой',
+            'noble': 'Шляхетний',
+            'sage': 'Мудрець',
+            'soldier': 'Солдат'
+        };
+
+        const alignmentNames = {
+            'lawful-good': 'Законний добрий',
+            'neutral-good': 'Нейтральний добрий',
+            'chaotic-good': 'Хаотичний добрий',
+            'lawful-neutral': 'Законний нейтральний',
+            'true-neutral': 'Істинно нейтральний',
+            'chaotic-neutral': 'Хаотичний нейтральний',
+            'lawful-evil': 'Законний злий',
+            'neutral-evil': 'Нейтральний злий',
+            'chaotic-evil': 'Хаотичний злий'
+        };
+
+        // Оновлюємо об'єкт subclasses, щоб використовувати українські назви
+        const subclasses = {
+            'barbarian': [
+                { value: 'berserker', name: 'Берсерк' },
+                { value: 'totem-warrior', name: 'Тотемний воїн' }
+            ],
+            'bard': [
+                { value: 'lore', name: 'Коледж знань' },
+                { value: 'valor', name: 'Коледж доблесті' }
+            ],
+            'cleric': [
+                { value: 'life', name: 'Домен життя' },
+                { value: 'war', name: 'Домен війни' }
+            ],
+            'druid': [
+                { value: 'land', name: 'Коло землі' },
+                { value: 'moon', name: 'Коло місяця' }
+            ],
+            'fighter': [
+                { value: 'champion', name: 'Чемпіон' },
+                { value: 'battle-master', name: 'Майстер бою' }
+            ],
+            'monk': [
+                { value: 'open-hand', name: 'Шлях відкритої долоні' },
+                { value: 'shadow', name: 'Шлях тіні' }
+            ],
+            'paladin': [
+                { value: 'devotion', name: 'Клятва відданості' },
+                { value: 'vengeance', name: 'Клятва помсти' }
+            ],
+            'ranger': [
+                { value: 'hunter', name: 'Мисливець' },
+                { value: 'beast-master', name: 'Повелитель звірів' }
+            ],
+            'rogue': [
+                { value: 'thief', name: 'Злодій' },
+                { value: 'assassin', name: 'Вбивця' }
+            ],
+            'sorcerer': [
+                { value: 'draconic', name: 'Драконова кров' },
+                { value: 'wild', name: 'Дика магія' }
+            ],
+            'warlock': [
+                { value: 'fiend', name: 'Пакт з дияволом' },
+                { value: 'great-old-one', name: 'Пакт з прадавнім' }
+            ],
+            'wizard': [
+                { value: 'evocation', name: 'Школа втілення' },
+                { value: 'necromancy', name: 'Школа некромантії' }
+            ]
+        };
+
+        // Оновлюємо функцію updateSubclass для використання українських назв
+        function updateSubclass() {
+            const classSelect = document.getElementById('class');
+            const subclassSelect = document.getElementById('subclass');
+            
+                subclassSelect.innerHTML = '<option value="">Оберіть під-клас</option>';
+                
+            if (classSelect.value && subclasses[classSelect.value]) {
+                subclasses[classSelect.value].forEach(subclass => {
+                    const option = document.createElement('option');
+                    option.value = subclass.value;
+                    option.textContent = subclass.name;
+                    subclassSelect.appendChild(option);
+                });
+            } else {
+                subclassSelect.innerHTML = '<option value="">Спочатку оберіть основний клас</option>';
+            }
+        }
+
+        // Функції для роботи з вкладками
+        function showTab(tabName) {
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.getElementById(tabName + 'Tab').classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Функція для попереднього перегляду аватара
+        function previewAvatar(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('avatarImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Функція для перемикання мов
+        function toggleLanguage(element) {
+            element.classList.toggle('selected');
+        }
+
+        // Функція для збереження персонажа
+        function saveCharacter(event) {
+            event.preventDefault();
+            
+            // Збираємо всі дані персонажа
+            const character = {
+                name: document.getElementById('name').value,
+                level: document.getElementById('level').value,
+                race: document.getElementById('race').value,
+                class: document.getElementById('class').value,
+                subclass: document.getElementById('subclass').value,
+                background: document.getElementById('background').value,
+                alignment: document.getElementById('alignment').value,
+                avatar: document.getElementById('avatarImage').src,
+                appearance: {
+                    height: document.getElementById('height').value,
+                    weight: document.getElementById('weight').value,
+                    eyes: document.getElementById('eyes').value,
+                    hair: document.getElementById('hair').value,
+                    skin: document.getElementById('skin').value,
+                    features: document.getElementById('features').value
+                },
+                languages: Array.from(document.querySelectorAll('.language-item.selected'))
+                    .map(lang => lang.textContent),
+                // Додайте інші поля за необхідності
+            };
+
+            // Зберігаємо персонажа в localStorage
+            const savedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
+            savedCharacters.push(character);
+            localStorage.setItem('characters', JSON.stringify(savedCharacters));
+
+            // Оновлюємо список збережених персонажів
+            updateCharacterList();
+
+            // Показуємо повідомлення про успішне збереження
+            alert('Персонаж успішно збережений!');
+            return false;
+        }
+
+        // Функція для експорту персонажа
+        function exportCharacter() {
+            const character = {
+                // Збираємо всі дані персонажа
+                // ...
+            };
+            
+            const dataStr = "data:text/json;charset=utf-8," + 
+                encodeURIComponent(JSON.stringify(character));
+            const downloadAnchorNode = document.createElement('a');
+            downloadAnchorNode.setAttribute("href", dataStr);
+            downloadAnchorNode.setAttribute("download", character.name + "_character.json");
+            document.body.appendChild(downloadAnchorNode);
+            downloadAnchorNode.click();
+            downloadAnchorNode.remove();
+        }
+
+        // Функція для імпорту персонажа
+        function importCharacter() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = function(event) {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const character = JSON.parse(e.target.result);
+                    // Заповнюємо форму даними персонажа
+                    // ...
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // Функція для оновлення списку збережених персонажів
+        function updateCharacterList() {
+            const characterList = document.querySelector('.character-list');
+            const savedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
+            
+            characterList.innerHTML = savedCharacters.map(char => `
+                <div class="character-card animate-fade">
+                    <img src="${char.avatar}" alt="Аватар" style="width: 50px; height: 50px; border-radius: 50%;">
+                    <h3>${char.name}</h3>
+                    <p>${char.race} ${char.class} (Рівень ${char.level})</p>
+                    <button onclick="loadCharacter('${char.name}')">Завантажити</button>
+                    <button onclick="deleteCharacter('${char.name}')">Видалити</button>
+                    </div>
+            `).join('');
+        }
+
+        // Функція для завантаження персонажа
+        function loadCharacter(name) {
+            const savedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
+            const character = savedCharacters.find(char => char.name === name);
+            if (character) {
+                // Заповнюємо форму даними персонажа
+                // ...
+                showTab('create');
+            }
+        }
+
+        // Функція для видалення персонажа
+        function deleteCharacter(name) {
+            if (confirm('Ви впевнені, що хочете видалити цього персонажа?')) {
+                const savedCharacters = JSON.parse(localStorage.getItem('characters') || '[]');
+                const updatedCharacters = savedCharacters.filter(char => char.name !== name);
+                localStorage.setItem('characters', JSON.stringify(updatedCharacters));
+                updateCharacterList();
+            }
+        }
+
+        // Ініціалізація при завантаженні сторінки
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCharacterList();
+        });
+
+        // Функція для показу довідкової інформації
+        function showRefTab(tabName) {
+            const content = document.getElementById('referenceContent');
+            const tabs = document.querySelectorAll('.ref-tab');
+            
+            // Видаляємо активний клас з усіх вкладок
+            tabs.forEach(tab => tab.classList.remove('active'));
+            // Додаємо активний клас до обраної вкладки
+            event.currentTarget.classList.add('active');
+
+            // Оновлюємо контент в залежності від обраної вкладки
+            switch(tabName) {
+                case 'racial':
+                    const race = document.getElementById('race').value;
+                    content.innerHTML = getRacialFeatures(race);
+                    break;
+                case 'class':
+                    const className = document.getElementById('class').value;
+                    content.innerHTML = getClassFeatures(className);
+                    break;
+                case 'spells':
+                    const characterClass = document.getElementById('class').value;
+                    content.innerHTML = getSpellList(characterClass);
+                    break;
+            }
+        }
+
+        // Функція для отримання расових особливостей
+        function getRacialFeatures(race) {
+            const features = {
+                'human': `
+                    <h4>Особливості людини:</h4>
+                    <ul>
+                        <li>Збільшення характеристик: Всі характеристики +1</li>
+                        <li>Розмір: Середній</li>
+                        <li>Швидкість: 30 футів</li>
+                        <li>Мови: Загальна та одна на вибір</li>
+                    </ul>
+                `,
+                'elf': `
+                    <h4>Особливості ельфа:</h4>
+                    <ul>
+                        <li>Збільшення характеристик: Спритність +2</li>
+                        <li>Темний зір: 60 футів</li>
+                        <li>Чутливі чуття: Перевага на перевірки Мудрості (Сприйняття)</li>
+                        <li>Фейське походження: Перевага проти зачарування</li>
+                    </ul>
+                `,
+                // Додайте інші раси за потребою
+            };
+            return features[race] || 'Оберіть расу для перегляду особливостей';
+        }
+
+        // Функція для отримання класових особливостей
+        function getClassFeatures(className) {
+            const features = {
+                'warrior': `
+                    <h4>Особливості воїна:</h4>
+                    <ul>
+                        <li>Хіти: 1d10 за рівень</li>
+                        <li>Володіння бронею: Вся броня, щити</li>
+                        <li>Володіння зброєю: Проста та військова зброя</li>
+                        <li>Бойовий стиль</li>
+                        <li>Друге дихання</li>
+                    </ul>
+                `,
+                'wizard': `
+                    <h4>Особливості чарівника:</h4>
+                    <ul>
+                        <li>Хіти: 1d6 за рівень</li>
+                        <li>Володіння зброєю: Кинджали, дротики, пращі, посохи, легкі арбалети</li>
+                        <li>Використання заклинань</li>
+                        <li>Відновлення заклинань</li>
+                        <li>Магічна традиція</li>
+                    </ul>
+                `,
+                // Додайте інші класи за потребою
+            };
+            return features[className] || 'Оберіть клас для перегляду особливостей';
+        }
+
+        // Функція для отримання списку заклинань
+        function getSpellList(characterClass) {
+            const spells = {
+                'wizard': `
+                    <h4>Заклинання чарівника 1-го рівня:</h4>
+                    <ul>
+                        <li>Магічна стріла</li>
+                        <li>Щит</li>
+                        <li>Сон</li>
+                        <li>Палаючі руки</li>
+                        <li>Маскування</li>
+                    </ul>
+                `,
+                'cleric': `
+                    <h4>Заклинання жреця 1-го рівня:</h4>
+                    <ul>
+                        <li>Лікування ран</li>
+                        <li>Благословення</li>
+                        <li>Щит віри</li>
+                        <li>Направлений удар</li>
+                        <li>Слово зцілення</li>
+                    </ul>
+                `,
+                // Додайте інші класи за потребою
+            };
+            return spells[characterClass] || 'Цей клас не має доступу до заклинань';
+        }
+
+        // Оновлення бойових характеристик при зміні значень
+        document.getElementById('class').addEventListener('change', updateCombatStats);
+        document.getElementById('constitution').addEventListener('input', updateCombatStats);
+        document.getElementById('dexterity').addEventListener('input', updateCombatStats);
+
+        function updateCombatStats() {
+            const characterClass = document.getElementById('class').value;
+            const constitutionMod = Math.floor((parseInt(document.getElementById('constitution').value) - 10) / 2);
+            const dexterityMod = Math.floor((parseInt(document.getElementById('dexterity').value) - 10) / 2);
+
+            // Оновлення хітів
+            let baseHp = 0;
+            switch(characterClass) {
+                case 'warrior':
+                case 'paladin':
+                    baseHp = 10;
+                    break;
+                case 'wizard':
+                case 'sorcerer':
+                    baseHp = 6;
+                    break;
+                default:
+                    baseHp = 8;
+            }
+            
+            const maxHp = baseHp + constitutionMod;
+            document.getElementById('maxHp').value = maxHp;
+            document.getElementById('currentHp').value = maxHp;
+
+            // Оновлення класу броні
+            const baseAc = 10 + dexterityMod;
+            document.getElementById('ac').value = baseAc;
+
+            // Оновлення ініціативи
+            document.getElementById('initiative').value = dexterityMod;
+        }
+    </script>
+</body>
+</html>
